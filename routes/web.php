@@ -16,4 +16,6 @@ Route::get('create','TodoController@create');
 Route::post('create','TodoController@store');
 Route::get('edit/{id}','TodoController@edit');
 Route::post('edit', 'TodoController@update');
+Route::get('show/{id}', 'TodoController@show');
+Route::post('delete', 'TodoController@delete');
 

@@ -10,10 +10,13 @@
     <h1>Todo一覧</h1>
 	<p><a href="/create" class="btn btn-primary">新規追加</a></p>
  
-    @foreach ($todos as $todo)
+	@foreach ($todos as $todo)
     <div class="card mb-2">
       <div class="card-body">
-        <h4 class="card-title">{{ $todo->title }}</h4>
+	<form method="post" action="/delete">
+	@csrf
+	<input type="hidden" name="id" class="form-controll" value="{{$todo->id}}">
+	<h4  class="card-title"><a href="/show/{{$todo->id}}" class="card-link">{{ $todo->title }}</a></h4>
         <h6 class="card-subtitle mb-2 text-muted">{{ $todo->updated_at }}</h6>
 	<p class="card-text">{{ $todo->detail }}</p>
 	<h5 class="card-text">{{ $todo->limit }}</h5>
@@ -21,7 +24,8 @@
 	@else <h6 class="card-text">完了</h6>
 	@endif
 	<h5 class="card-text">{{ $todo->user_name }}</h5>
-	<a href="/edit/{{ $todo->id }}" class="card-link">修正</a>	
+	<a href="/edit/{{ $todo->id }}" class="card-link">修正</a>
+	<button type="submit" class="btn btn-primary">削除</button></form>	
       </div>
     </div>
     @endforeach
