@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">-->
   </head>
   <body class="p-3">
-    <h1>Todo新規追加完了</h1>
- 
+    <h1>todo修正完了</h1>
+
     <div class="alert alert-primary" role="alert">
-      新規追加しました。
+      修正しました。
       <a href="/" class="btn btn-primary">一覧に戻る</a>
     </div>
  <!--

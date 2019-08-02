@@ -26,4 +26,19 @@ class TodoController extends Controller
 		$todo->save();
 		return view('todo.store');	
 	}
+
+	public function edit(Request $request, $id){
+		$todo = Todo::find($id);
+		return view('todo.edit',['todo' => $todo]);
+	}
+
+	public function update(Request $request){
+		$todo = Todo::find($request->id);
+		$todo->title =  $request->title;
+		$todo->detail = $request->detail;
+		$todo->limit = $request->limit;
+		$todo->save();
+		return view('todo.update');
+	}
+		
 }

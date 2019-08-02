@@ -3,31 +3,37 @@
   <head>
     <title>Laravelチュートリアル</title>
     <meta charset="utf-8">
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">-->
   </head>
   <body class="p-3">
-    <h1>Todo一覧</h1>
-	<p><a href="/create" class="btn btn-primary">新規追加</a></p>
- 
-    @foreach ($todos as $todo)
-    <div class="card mb-2">
-      <div class="card-body">
-        <h4 class="card-title">{{ $todo->title }}</h4>
-        <h6 class="card-subtitle mb-2 text-muted">{{ $todo->updated_at }}</h6>
-	<p class="card-text">{{ $todo->detail }}</p>
-	<h5 class="card-text">{{ $todo->limit }}</h5>
-	@if ($todo->is_done == 0)<h6 class="card-text">未完了</h6>
-	@else <h6 class="card-text">完了</h6>
-	@endif
-	<h5 class="card-text">{{ $todo->user_name }}</h5>
-	<a href="/edit/{{ $todo->id }}" class="card-link">修正</a>	
+    <h1>Todo修正</h1>
+
+    <form method="post" action="/edit">
+      <!--{{ csrf_field() }}-->
+      @csrf
+      <!--{{method_field('PUT')}}-->
+      <div class="form-group">
+        <input type="hidden" class="form-control" name="id" value="{{$todo->id}}">
+        <label for="titleInput">タイトル</label>
+        <input type="text" class="form-control" id="titleInput" name="title" value="{{$todo->title}}">
       </div>
-    </div>
-    @endforeach
- 
+      <div class="form-group">
+        <label for="detailInput">内容</label>
+        <textarea class="form-control" id="detailInput" rows="3" name="detail">{{$todo->detail}}</textarea>
+      </div>
+        <div class="form-group">
+        <label for="limitInput"></label>
+        <input type="text" class="form-control" id="limitInput" name="limit"value="{{$todo->limit}}">
+
+        </div>
+      <button type="submit" class="btn btn-primary">修正</button>
+    </form>
+
+
    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>-->
   </body>
 </html>
+
