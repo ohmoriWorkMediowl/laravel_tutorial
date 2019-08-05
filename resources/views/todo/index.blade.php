@@ -15,6 +15,12 @@
         <h4 class="card-title"><a href="/detail/{{$todo->id}}">{{ $todo->title }}</a></h4>
         <h6 class="card-subtitle mb-2 text-muted">{{ $todo->updated_at }}</h6>
 	<p class="card-text">{{ $todo->detail }}</p>
+	<form method="post" action="/complete">
+		{{ csrf_field() }}
+		<input type="hidden" class="form-control" name="doneflg" value="{{$todo->doneflg}}">
+		<input type="hidden" class="form-control" name="id" value="{{$todo->id}}">
+		<button type="submit" class="btn btn-primary">完了</button>
+	</form>
 	<p class="card-text">{{ $todo->doneflg }}</p>
 	<p class="card-text">{{ $todo->deadline }}</p>
 	<p class="card-text">{{ $todo->uid }}</p>
