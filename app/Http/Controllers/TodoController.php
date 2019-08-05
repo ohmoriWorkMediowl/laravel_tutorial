@@ -44,4 +44,8 @@ class TodoController extends Controller
 		Todo::destroy($request->id);
 		return view('todo.delete');
 	}
+	public function detail(Request $request, $id){
+		$todo = Todo::find($request->id);
+		return view('todo.detail', ['todo' => $todo]);
+	}
 }

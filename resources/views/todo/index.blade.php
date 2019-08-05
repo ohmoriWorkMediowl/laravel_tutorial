@@ -12,7 +12,7 @@
     @foreach ($todos as $todo)
     <div class="card mb-2">
       <div class="card-body">
-        <h4 class="card-title">{{ $todo->title }}</h4>
+        <h4 class="card-title"><a href="/detail/{{$todo->id}}">{{ $todo->title }}</a></h4>
         <h6 class="card-subtitle mb-2 text-muted">{{ $todo->updated_at }}</h6>
 	<p class="card-text">{{ $todo->detail }}</p>
 	<p class="card-text">{{ $todo->doneflg }}</p>
