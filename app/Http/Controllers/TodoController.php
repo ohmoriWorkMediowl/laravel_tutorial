@@ -36,4 +36,12 @@ class TodoController extends Controller
 		$todo->save();
 		return view('todo.update');
 	}
+	public function show(Request $request, $id){
+		$todo = Todo::find($request->id);
+		return view('todo.show', ['todo' => $todo]);
+	}
+	public function delete(Request $request){
+		Todo::destroy($request->id);
+		return view('todo.delete');
+	}
 }

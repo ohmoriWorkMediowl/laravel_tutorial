@@ -19,6 +19,7 @@
 	<p class="card-text">{{ $todo->deadline }}</p>
 	<p class="card-text">{{ $todo->uid }}</p>
 	<a href="/edit/{{$todo->id}}" class="card-link">修正</a>
+	<a href="/delete/{{ $todo->id}}" class="card-link">削除</a>
       </div>
     </div>
     @endforeach

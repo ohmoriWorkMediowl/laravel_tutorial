@@ -7,7 +7,6 @@
 @section('title', 'laravel_practice')
 @section('content')
 <div class="container">
-<h1>Todo一覧</h1>
     <h1>Todo編集完了</h1>
 
     <div class="alert alert-primary" role="alert">
