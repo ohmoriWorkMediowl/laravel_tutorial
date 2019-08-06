@@ -8,6 +8,12 @@
 @section('content')
 <div class="container">
 <h1>Todo一覧</h1>
+<form class="form-inline" action="{{url('/')}}">
+<div class="form-group">
+	<input type="text" name="keyword" value="{{$keyword}}" placeholder="内容検索">
+<input type="submit" value="検索">
+</div>
+</form>
 <div class="container">
 <h2>未完了Todo</h2>
 @foreach ($todos as $todo)

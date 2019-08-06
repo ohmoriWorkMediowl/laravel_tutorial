@@ -7,10 +7,17 @@ use App\Todo;
 class TodoController extends Controller
 {
 	//一覧表示
-	public function index(){
-		$todos = Todo::where('doneflg' , '=', 0)->latest()->paginate(5,["*"], 'mi')->appends(["sumi"=>Input::get('sumi')]);;
-		$todos2= Todo::where('doneflg' , '!=', 0)->latest()->paginate(5,["*"],'sumi')->appends(["mi"=>Input::get('mi')]);
-		return view('todo.index' , ['todos' => $todos], ['todos2' => $todos2]);
+	public function index(Request $request){
+		$keyword = $request->input('keyword');
+		if(!empty($keyword)){
+                        $todos = Todo::where('detail', 'like', '%'.$keyword.'%')->where('doneflg' , '=', 0)->latest()->paginate(5,["*"], 'mi')->appends(["sumi"=>Input::get('sumi')]);
+			$todos2 = Todo::where('detail', 'like', '%'.$keyword.'%')->where('doneflg', '!=', 0)->latest()->paginate(5,["*"], 'sumi')->appends(["mi"=>Input::get('mi')]);
+			return view('todo.index' , ['todos' => $todos], ['todos2' => $todos2])->with('keyword',$keyword);
+		}else{
+			$todos = Todo::where('doneflg' , '=', 0)->latest()->paginate(5,["*"], 'mi')->appends(["sumi"=>Input::get('sumi')]);
+			$todos2= Todo::where('doneflg' , '!=', 0)->latest()->paginate(5,["*"],'sumi')->appends(["mi"=>Input::get('mi')]);
+			return view('todo.index' , ['todos' => $todos], ['todos2' => $todos2])->with('keyword', $keyword);
+		}
 	}
 	//新規登録フォーム
 	public function create(){
