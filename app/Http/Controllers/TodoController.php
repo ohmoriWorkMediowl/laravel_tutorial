@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Todo;
 class TodoController extends Controller
 {
 	//一覧表示
 	public function index(){
-		$todos = Todo::all();
-		return view('todo.index' , ['todos' => $todos]);
+		$todos = Todo::where('doneflg' , '=', 0)->latest()->paginate(5,["*"], 'mi')->appends(["sumi"=>Input::get('sumi')]);;
+		$todos2= Todo::where('doneflg' , '!=', 0)->latest()->paginate(5,["*"],'sumi')->appends(["mi"=>Input::get('mi')]);
+		return view('todo.index' , ['todos' => $todos], ['todos2' => $todos2]);
 	}
 	//新規登録フォーム
 	public function create(){
@@ -59,7 +60,6 @@ class TodoController extends Controller
 		$todo = Todo::find($request->id);
 		$todo->doneflg = 1;
 		$todo->save();
-		$todos = Todo::all();
-		return view('todo.index', ['todos' => $todos]);
+		return redirect()->action('TodoController@index');
 	}
 }
