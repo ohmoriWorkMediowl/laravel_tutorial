@@ -37,9 +37,9 @@ class UserController extends Controller
 	    $user = new User;
 	    $user->name = $request->name;
 	    $user->password = $request->password;
-	    $user->email = 'brank';
+	    $user->email = $request->email;
 	    $user->save();
-	    return redirect('users/'.$user->id);
+	    return redirect('/');
     }
 
 
