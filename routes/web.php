@@ -20,12 +20,9 @@ Route::get('delete/{id}', 'TodoController@show');
 Route::post('delete', 'TodoController@delete');
 Route::get('detail/{id}', 'TodoController@detail');
 Route::post('complete','TodoController@complete');
-Route::get('foo', function(){
-    return 'Foo!';
-});
+Route::get('top','TodoController@top');
 
 Route::resource('users', 'UserController');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');

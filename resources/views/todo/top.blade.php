@@ -1,3 +1,4 @@
+
 @php
         $title = env('APP_NAME');
 @endphp
@@ -7,7 +8,8 @@
 @section('title', 'laravel_practice')
 @section('content')
 <div class="container">
-<h1>Todo詳細</h1>
+<h1>最新のTodo</h1>
+@if ($todo)
     <div class="card mb-2">
       <div class="card-body">
         <h4 class="card-title">{{ $todo->title }}</h4>
@@ -18,4 +20,5 @@
       </div>
     </div> 
 </div>
+@endif
 @endsection
