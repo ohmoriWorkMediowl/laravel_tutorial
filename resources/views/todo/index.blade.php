@@ -43,7 +43,7 @@
 <h2><a href="#ori2" data-toggle="collapse">完了済みTodo</a></h2>
 <div id="ori2" class="collapse show">
 @foreach ($todos2 as $todo2)
-@if ($todo->uid == Auth::id())
+@if ($todo2->uid == Auth::id())
     <div class="card mb-2">
       <div class="card-body">
         <h4 class="card-title"><a href="/detail/{{$todo2->id}}">{{ $todo2->title }}</a></h4>

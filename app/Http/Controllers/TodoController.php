@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Todo;
 use Auth;
+use App\Http\Requests\StoreTodo;
 class TodoController extends Controller
 {
 	public function __construct(){
@@ -28,7 +29,7 @@ class TodoController extends Controller
 		return view('todo.create');
 	}
 	//新規登録
-	public function store(Request $request){
+	public function store(StoreTodo $request){
 		$todo = new Todo;
 		$todo->title = $request->title;
 		$todo->detail = $request->detail;
@@ -44,7 +45,7 @@ class TodoController extends Controller
 		return view('todo.edit', ['todo'=>$todo]);
 	}
 	//編集
-	public function update(Request $request){
+	public function update(StoreTodo $request){
 		$todo = Todo::find($request->id);
 		$todo->title = $request->title;
 		$todo->detail = $request->detail;

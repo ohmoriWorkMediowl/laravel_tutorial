@@ -13,11 +13,23 @@
       {{ csrf_field() }}
       <div class="form-group">
         <label for="titleInput">タイトル</label>
-        <input type="text" class="form-control" id="titleInput" name="title">
+	
+	<input id="title" type="text" class="form-control @if($errors->has('title')) is-invalid @endif" name="title" value="{{old('title')}}" required autofocus>
+           @if ($errors->has('title'))
+                <span class="invalid-feedback" role="alert">
+                    {{ $errors->first('title') }}
+                </span>
+		@endif
+
       </div>
       <div class="form-group">
-        <label for="bodyInput">内容</label>
-        <textarea class="form-control" id="detailInput" rows="3" name="detail"></textarea>
+	<label for="bodyInput">内容</label>
+<textarea id="detail" class="form-control @if($errors->has('detail')) id-invalid @endif" name="detail" rows="8" required>{{ old('body') }}</textarea>
+            @if ($errors->has('detail'))
+                <span class="invalid-feedback" role="alert">
+                    {{ $errors->first('detail') }}
+                </span>
+	    @endif
       </div>
       <button type="submit" class="btn btn-primary">新規追加</button>
     </form>
