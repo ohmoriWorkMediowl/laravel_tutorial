@@ -23,8 +23,8 @@
 
       </div>
       <div class="form-group">
-	<label for="bodyInput">内容</label>
-<textarea id="detail" class="form-control @if($errors->has('detail')) id-invalid @endif" name="detail" rows="8" required>{{ old('body') }}</textarea>
+	<label for="detailInput">内容</label>
+<textarea id="detail" class="form-control @if($errors->has('detail')) is-invalid @endif" name="detail" rows="8" required>{{ old('detail') }}</textarea>
             @if ($errors->has('detail'))
                 <span class="invalid-feedback" role="alert">
                     {{ $errors->first('detail') }}
