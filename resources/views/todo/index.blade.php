@@ -15,7 +15,8 @@
 <input type="submit" value="検索">
 </div>
 </form>
-<h2>未完了Todo</h2>
+<h2><a href="#ori1" data-toggle="collapse" >未完了Todo</a></h2>
+<div id="ori1" class="collapse show">
 @foreach ($todos as $todo)
 @if ($todo->uid == Auth::id())
     <div class="card mb-2">
@@ -37,8 +38,10 @@
 @endforeach
 {{$todos->links()}}
 </div>
+</div>
 <div class="container">
-<h2>完了済みTodo</h2>
+<h2><a href="#ori2" data-toggle="collapse">完了済みTodo</a></h2>
+<div id="ori2" class="collapse show">
 @foreach ($todos2 as $todo2)
 @if ($todo->uid == Auth::id())
     <div class="card mb-2">
@@ -52,6 +55,7 @@
 @endif
 @endforeach
 {{$todos2->links()}}
+</div>
 </div>
 </div>
 @endsection

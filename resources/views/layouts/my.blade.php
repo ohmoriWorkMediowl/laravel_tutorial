@@ -29,10 +29,10 @@
                     <ul class="navbar-nav mr-auto">
                         {{-- 「記事」と「ユーザー」へのリンク --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('posts') }}">{{ __('Posts') }}</a>
+                            <a class="nav-link" href="{{ url('/') }}">{{ __('TodoList') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('users') }}">{{ __('Users') }}</a>
+                            <a class="nav-link" href="{{ url('/top') }}">{{ __('Recent Todo') }}</a>
                         </li>
                     </ul>
 
@@ -47,7 +47,6 @@
 
                         {{-- 認証関連のリンク --}}
                         @guest
-                            {{-- 「ログイン」と「ユーザー登録」へのリンク --}}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
@@ -55,15 +54,11 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
-                            {{-- 「プロフィール」と「ログアウト」のドロップダウンメニュー --}}
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="dropdown-user" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user">
-                                    <a class="dropdown-item" href="{{ url('/top') }}">
-                                        {{ __('TOP') }}
-                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
