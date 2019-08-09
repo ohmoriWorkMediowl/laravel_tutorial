@@ -42,6 +42,12 @@ class TodoController extends Controller
 	//編集フォーム
 	public function edit(Request $request, $id){
 		$todo = Todo::find($id);
+		if(!$todo){
+			return redirect()->action('TodoController@index');
+		}
+		if($todo->uid != Auth::id()){
+			return redirect()->action('TodoController@index');
+		}
 		return view('todo.edit', ['todo'=>$todo]);
 	}
 	//編集
@@ -55,6 +61,12 @@ class TodoController extends Controller
 	//削除フォーム
 	public function show(Request $request, $id){
 		$todo = Todo::find($request->id);
+		if(!$todo){
+			return redirect()->action('TodoController@index');
+		}
+		if($todo->uid != Auth::id()){
+			return redirect()->action('TodoController@index');
+		}
 		return view('todo.show', ['todo' => $todo]);
 	}
 	//削除
@@ -65,6 +77,13 @@ class TodoController extends Controller
 	//詳細
 	public function detail(Request $request, $id){
 		$todo = Todo::find($request->id);
+		if(!$todo){
+			return redirect()->action('TodoController@index');
+		}
+
+		if($todo->uid != Auth::id()){
+			return redirect()->action('TodoController@index');
+		}
 		return view('todo.detail', ['todo' => $todo]);
 	}
 	//タスク完了
