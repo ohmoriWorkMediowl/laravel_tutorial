@@ -9,7 +9,7 @@
         @csrf {{-- CSRF保護 --}}
         @method('POST') {{-- 疑似フォームメソッド --}}
         <div class="form-group">
-            <label for="name">{{ __('Name') }}</label>
+            <label for="name">{{ __('Na::wame') }}</label>
             <input id="name" type="text" class="form-control" name="name" required autofocus>
         </div>
         <!--<div class="form-group">

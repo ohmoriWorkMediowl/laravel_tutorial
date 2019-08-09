@@ -75,7 +75,7 @@ class TodoController extends Controller
 		return redirect()->action('TodoController@index');
 	}
 	public function top(){
-		$todo = Todo::where('uid', '=', Auth::id())->latest()->first();
+		$todo = Todo::where('uid', '=', Auth::id())->where('doneflg', '=', 0)->latest()->first();
 		return view('todo.top', ['todo' => $todo]);
 	}
 }
