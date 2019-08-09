@@ -21,4 +21,5 @@
     </div> 
 </div>
 @endif
+@if(!$todo)<span>未完了のtodoはありません</span>@endif
 @endsection

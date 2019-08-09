@@ -17,6 +17,7 @@
 </form>
 <h2><a href="#ori1" data-toggle="collapse" >未完了Todo</a></h2>
 <div id="ori1" class="collapse show">
+@if($todos->count()==0)<span>未完了のtodoはありません</span>@endif
 @foreach ($todos as $todo)
 @if ($todo->uid == Auth::id())
     <div class="card mb-2">
@@ -42,6 +43,7 @@
 <div class="container">
 <h2><a href="#ori2" data-toggle="collapse">完了済みTodo</a></h2>
 <div id="ori2" class="collapse show">
+@if($todos2->count()==0)<span>完了済みのtodoはありません</span>@endif
 @foreach ($todos2 as $todo2)
 @if ($todo2->uid == Auth::id())
     <div class="card mb-2">
