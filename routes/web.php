@@ -11,18 +11,18 @@
 |
 */
 
-Route::get('/', 'TodoController@index');
-Route::get('create','TodoController@create');
-Route::post('create','TodoController@store');
-Route::get('edit/{id}','TodoController@edit');
-Route::post('edit', 'TodoController@update');
-Route::get('delete/{id}', 'TodoController@show');
-Route::post('delete', 'TodoController@delete');
-Route::get('detail/{id}', 'TodoController@detail');
-Route::post('complete','TodoController@complete');
+#Route::get('/', 'TodoController@index');
+#Route::get('create','TodoController@create');
+#Route::post('create','TodoController@store');
+#Route::get('edit/{id}','TodoController@edit');
+#Route::post('edit', 'TodoController@update');
+#Route::get('delete/{id}', 'TodoController@show');
+#Route::post('delete', 'TodoController@delete');
+#Route::get('detail/{id}', 'TodoController@detail');
+Route::redirect('/', '/todos');
+Route::post('todos/complete','TodoController@complete');
 Route::get('top','TodoController@top');
-
+Route::resource('todos', 'TodoController');
 Route::resource('users', 'UserController');
-
 Auth::routes();
 

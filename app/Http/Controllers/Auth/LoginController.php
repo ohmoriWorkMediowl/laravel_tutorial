@@ -38,7 +38,7 @@ class LoginController extends Controller
 
     protected function authenticated(\Illuminate\Http\Request $request, $user)
 {
-    return redirect('\top');
+    return redirect('/top');
 }
 
 }
