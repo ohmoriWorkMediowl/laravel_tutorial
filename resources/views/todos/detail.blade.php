@@ -16,7 +16,12 @@
 				@if ($todo->doneflg == 0)
 					<a href="/edit/{{$todo->id}}" class="card-link">修正</a>
 				@endif
-				<a href="/delete/{{ $todo->id}}" class="card-link">削除</a>
+				<form method="post" action="destroy" class="form-control" name="id">
+					@csrf
+					@method('delete')
+					<input type="hidden" value="{{$todo->id}}">
+					<a href="/delete/{{$todo->id}}" class="card-link">削除</a>
+				</form>
 			</div>
 		</div> 
 	</div>

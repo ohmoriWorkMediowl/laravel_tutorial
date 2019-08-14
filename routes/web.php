@@ -21,7 +21,6 @@
 #Route::get('detail/{id}', 'TodoController@detail');
 Route::redirect('/', '/todos');
 Route::post('todos/complete','TodoController@complete');
-Route::get('top','TodoController@top');
 Route::resource('todos', 'TodoController');
 Route::resource('users', 'UserController');
 Auth::routes();

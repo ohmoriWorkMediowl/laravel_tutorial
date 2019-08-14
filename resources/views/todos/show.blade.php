@@ -9,8 +9,9 @@
 	<div class="container">
 		<h1>Todo削除</h1>
 
-		<form method="post" action="/delete">
-			{{ csrf_field() }}
+		<form method="post" action="/todos/{{$todo->id}}">
+			@method{'delete'}
+			@csrf
 			<div class="form-group">
 				<input type = "hidden" class = "form-controll" name = "id" value="{{$todo->id}}">
 				<label for="titleInput">タイトル</label>

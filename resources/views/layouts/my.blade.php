@@ -32,7 +32,7 @@
                             <a class="nav-link" href="{{ url('/todos/index') }}">{{ __('TodoList') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/top') }}">{{ __('Recent Todo') }}</a>
+                            <a class="nav-link" href="{{ url('/users/show') }}">{{ __('Recent Todo') }}</a>
                         </li>
                     </ul>
 

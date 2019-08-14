@@ -9,8 +9,9 @@
 	<div class="container">
 		<h1>Todo編集</h1>
 
-		<form method="post" action="/edit">
-			{{ csrf_field() }}
+		<form method="post" action="/todos/{{$todo->id}}">
+			@csrf
+			@method('put')
 			<div class="form-group">
 				<input type = "hidden" class = "form-control" name = "id" value="{{$todo->id}}">
 				<label for="titleInput">タイトル</label>

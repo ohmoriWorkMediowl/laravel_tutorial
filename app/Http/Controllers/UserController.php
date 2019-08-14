@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Todo;
+use Auth;
 use App\Http\Requests\StoreUser;
 class UserController extends Controller
 {
@@ -50,9 +52,10 @@ class UserController extends Controller
 	 * @param  int  $id
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show($id)
+	public function show()
 	{
-		//
+		$todo = Todo::where('uid', '=', Auth::id())->where('doneflg', '=', 0)->latest()->first();
+		return view('users.show', ['todo' => $todo]);
 	}
 
 	/**
