@@ -17,19 +17,27 @@ class TodoController extends Controller
 		$todos = Todo::where('user_id', '=', Auth::id());
 
 		//未完了todo
-		$todos_notdone = (clone $todos)->where('doneflg' , '=', 0)->latest()
-			->paginate(5,["*"], 'doneflg_false')
-			->appends(["doneflg_true"=>Input::get('doneflg_true')]);
+		$todos_notdone = (clone $todos)->where('doneflg' , '=', 0)->latest();
 
 		//完了済みtodo
-		$todos_done = (clone $todos)->where('doneflg', '!=', 0)->latest()
-			->paginate(5,["*"], 'doneflg_true')
-			->appends(["doneflg_false"=>Input::get('doneflg_false')]);
+		$todos_done = (clone $todos)->where('doneflg', '!=', 0)->latest();
 
 		if(!empty($keyword)){//検索フォームに値が入ってた場合
 			$todos_notdone = $todos_notdone->where('detail', 'like', '%'.$keyword.'%');
 			$todos_done = $todos_done->where('detail', 'like', '%'.$keyword.'%');
 		}
+		
+
+		$todos_notdone = $todos_notdone
+			->paginate(5,["*"], 'doneflg_true')
+			->appends(["doneflg_false"=>Input::get('doneflg_false')]);
+
+		$todos_done = $todos_done
+			->paginate(5,["*"], 'doneflg_false')
+			->appends(["doneflg_true"=>Input::get('doneflg_true')]);
+
+
+
 		return view('todos.index' , ['todos_notdone' => $todos_notdone], ['todos_done' => $todos_done])->with('keyword',$keyword);
 	}
 
@@ -85,15 +93,6 @@ class TodoController extends Controller
 		}
 		Todo::destroy($request->id);
 		return redirect()->action('TodoController@index');
-	}
-	//詳細
-	public function detail(Request $request, $id){
-		$todo = Todo::find($request->id);
-		if(!$todo || $todo->user_id != Auth::id()){
-			return redirect()->action('TodoController@index');
-		}else{
-			return view('todos.detail', ['todo' => $todo]);
-		}
 	}
 	//タスク完了
 	public function complete(Request $request){

@@ -9,7 +9,7 @@
 	<div class="container">
 		<h1>Todo一覧</h1>
 		<div class="container">
-			<form class="form-inline" action="{{url('/todos/index')}}">
+			<form class="form-inline" action="{{url('/todos')}}">
 				<div class="form-group">
 					<input type="text" name="keyword" value="{{$keyword}}" placeholder="内容検索">
 					<input type="submit" value="検索">
