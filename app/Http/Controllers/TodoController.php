@@ -14,7 +14,7 @@ class TodoController extends Controller
 	//一覧表示
 	public function index(Request $request){
 		$keyword = $request->input('keyword');
-		$todos = Todo::where('uid', '=', Auth::id());
+		$todos = Todo::where('user_id', '=', Auth::id());
 
 		//未完了todo
 		$todos_notdone = (clone $todos)->where('doneflg' , '=', 0)->latest()
@@ -43,7 +43,7 @@ class TodoController extends Controller
 		$todo->title = $request->title;
 		$todo->detail = $request->detail;
 		$todo->doneflg = 0;
-		$todo->uid= $request->user()->id;
+		$todo->user_id= $request->user()->id;
 		$todo->deadline = '2019/09/30';//仮
 		$todo->save();
 		return redirect()->action('TodoController@index');
@@ -51,7 +51,7 @@ class TodoController extends Controller
 	//編集フォーム
 	public function edit($id){
 		$todo = Todo::find($id);
-		if(!$todo ||  $todo->uid != Auth::id()){
+		if(!$todo ||  $todo->user_id != Auth::id()){
 			return redirect()->action('TodoController@index');
 		}else{
 			return view('todos.edit', ['todo'=>$todo]);
@@ -60,7 +60,7 @@ class TodoController extends Controller
 	//編集
 	public function update(StoreTodo $request){
 		$todo = Todo::find($request->id);
-		if(!$todo || $todo->uid != Auth::id()){//Todo作成者IDチェック
+		if(!$todo || $todo->user_id != Auth::id()){//Todo作成者IDチェック
 			return redirect()->action('TodoController@index');
 		}
 		$todo->title = $request->title;
@@ -71,7 +71,7 @@ class TodoController extends Controller
 	//削除フォーム
 	public function show($id){
 		$todo = Todo::find($id);
-		if(!$todo || $todo->uid != Auth::id()){
+		if(!$todo || $todo->user_id != Auth::id()){
 			return redirect()->action('TodoController@index');
 		}else{
 			return view('todos.show', ['todo' => $todo]);
@@ -80,7 +80,7 @@ class TodoController extends Controller
 	//削除
 	public function destroy(Request $request){
 		$todo = Todo::find($request->id);
-		if(!$todo || $todo->uid != Auth::id()){
+		if(!$todo || $todo->user_id != Auth::id()){
 			return redirect()->action('TodoController@index');
 		}
 		Todo::destroy($request->id);
@@ -89,7 +89,7 @@ class TodoController extends Controller
 	//詳細
 	public function detail(Request $request, $id){
 		$todo = Todo::find($request->id);
-		if(!$todo || $todo->uid != Auth::id()){
+		if(!$todo || $todo->user_id != Auth::id()){
 			return redirect()->action('TodoController@index');
 		}else{
 			return view('todos.detail', ['todo' => $todo]);

@@ -54,7 +54,7 @@ class UserController extends Controller
 	 */
 	public function show()
 	{
-		$todo = Todo::where('uid', '=', Auth::id())->where('doneflg', '=', 0)->latest()->first();
+		$todo = Todo::where('user_id', '=', Auth::id())->where('doneflg', '=', 0)->latest()->first();
 		return view('users.show', ['todo' => $todo]);
 	}
 
