@@ -38,7 +38,7 @@ class LoginController extends Controller
 
     protected function authenticated(\Illuminate\Http\Request $request, $user)
 {
-    return redirect('/users/show');
+	return redirect('/users/show')->with('my_status', 'You logged in.');
 }
 
 }

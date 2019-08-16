@@ -54,7 +54,7 @@ class TodoController extends Controller
 		$todo->user_id= $request->user()->id;
 		$todo->deadline = '2019/09/30';//仮
 		$todo->save();
-		return redirect()->action('TodoController@index');
+		return redirect()->action('TodoController@index')->with('my_status', 'Created new Todo.');
 	}
 	//編集フォーム
 	public function edit($id){
@@ -68,13 +68,13 @@ class TodoController extends Controller
 	//編集
 	public function update(StoreTodo $request){
 		$todo = Todo::find($request->id);
-		if(!$todo || $todo->user_id != Auth::id()){//Todo作成者IDチェック
-			return redirect()->action('TodoController@index');
+			if(!$todo || $todo->user_id != Auth::id()){//Todo作成者IDチェック
+				return redirect()->action('TodoController@index');
 		}
 		$todo->title = $request->title;
 		$todo->detail = $request->detail;
 		$todo->save();
-		return redirect()->action('TodoController@index');
+		return redirect()->action('TodoController@index')->with('my_status', 'Updated Todo.');
 	}
 	//削除フォーム
 	public function show($id){
@@ -92,13 +92,13 @@ class TodoController extends Controller
 			return redirect()->action('TodoController@index');
 		}
 		Todo::destroy($request->id);
-		return redirect()->action('TodoController@index');
+		return redirect()->action('TodoController@index')->with('my_status', 'Deleted Todo.');
 	}
 	//タスク完了
 	public function complete(Request $request){
 		$todo = Todo::find($request->id);
 		$todo->doneflg = 1;
 		$todo->save();
-		return redirect()->action('TodoController@index');
+		return redirect()->action('TodoController@index')->with('my_status', 'Completed Todo.');
 	}
 }
