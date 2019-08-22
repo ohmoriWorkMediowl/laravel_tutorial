@@ -6,6 +6,15 @@
 @extends('layouts.my')
 @section('title', 'laravel_practice')
 @section('content')
+	<div id="app">
+		<button v-on:click="openModal">Click</button>
+		<div id="overlay" v-show="showContent">
+			<div id="mordalcontent">
+				<p>this is mordal window.</p>
+				<p><button v-on:click="closeModal">close</button></p>
+			</div>
+		 </div>
+	</div>
 	<div class="container">
 		<h1>Todo一覧</h1>
 		<div class="container">
