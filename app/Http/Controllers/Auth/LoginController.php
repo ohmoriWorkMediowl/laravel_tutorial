@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/top';
+    protected $redirectTo = '/users/show';
     /**
      * Create a new controller instance.
      *
@@ -38,7 +38,7 @@ class LoginController extends Controller
 
     protected function authenticated(\Illuminate\Http\Request $request, $user)
 {
-    return redirect('\top');
+    return redirect('/users/show');
 }
 
 }

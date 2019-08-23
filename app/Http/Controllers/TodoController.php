@@ -14,19 +14,36 @@ class TodoController extends Controller
 	//一覧表示
 	public function index(Request $request){
 		$keyword = $request->input('keyword');
-		if(!empty($keyword)){
-                        $todos = Todo::where('uid', '=', Auth::id())->where('detail', 'like', '%'.$keyword.'%')->where('doneflg' , '=', 0)->latest()->paginate(5,["*"], 'mi')->appends(["sumi"=>Input::get('sumi')]);
-			$todos2 = Todo::where('uid', '=', Auth::id())->where('detail', 'like', '%'.$keyword.'%')->where('doneflg', '!=', 0)->latest()->paginate(5,["*"], 'sumi')->appends(["mi"=>Input::get('mi')]);
-			return view('todo.index' , ['todos' => $todos], ['todos2' => $todos2])->with('keyword',$keyword);
-		}else{
-			$todos = Todo::where('uid', '=', Auth::id())->where('doneflg' , '=', 0)->latest()->paginate(5,["*"], 'mi')->appends(["sumi"=>Input::get('sumi')]);
-			$todos2= Todo::where('uid', '=', Auth::id())->where('doneflg' , '!=', 0)->latest()->paginate(5,["*"],'sumi')->appends(["mi"=>Input::get('mi')]);
-			return view('todo.index' , ['todos' => $todos], ['todos2' => $todos2])->with('keyword', $keyword);
+		$todos = Todo::where('user_id', '=', Auth::id());
+
+		//未完了todo
+		$todos_notdone = (clone $todos)->where('doneflg' , '=', 0)->latest();
+
+		//完了済みtodo
+		$todos_done = (clone $todos)->where('doneflg', '!=', 0)->latest();
+
+		if(!empty($keyword)){//検索フォームに値が入ってた場合
+			$todos_notdone = $todos_notdone->where('detail', 'like', '%'.$keyword.'%');
+			$todos_done = $todos_done->where('detail', 'like', '%'.$keyword.'%');
 		}
+		
+
+		$todos_notdone = $todos_notdone
+			->paginate(5,["*"], 'doneflg_true')
+			->appends(["doneflg_false"=>Input::get('doneflg_false')]);
+
+		$todos_done = $todos_done
+			->paginate(5,["*"], 'doneflg_false')
+			->appends(["doneflg_true"=>Input::get('doneflg_true')]);
+
+
+
+		return view('todos.index' , ['todos_notdone' => $todos_notdone], ['todos_done' => $todos_done])->with('keyword',$keyword);
 	}
+
 	//新規登録フォーム
 	public function create(){
-		return view('todo.create');
+		return view('todos.create');
 	}
 	//新規登録
 	public function store(StoreTodo $request){
@@ -34,57 +51,48 @@ class TodoController extends Controller
 		$todo->title = $request->title;
 		$todo->detail = $request->detail;
 		$todo->doneflg = 0;
-		$todo->uid= $request->user()->id;
+		$todo->user_id= $request->user()->id;
 		$todo->deadline = '2019/09/30';//仮
 		$todo->save();
-		return view('todo.store');
+		return redirect()->action('TodoController@index');
 	}
 	//編集フォーム
-	public function edit(Request $request, $id){
+	public function edit($id){
 		$todo = Todo::find($id);
-		if(!$todo){
+		if(!$todo ||  $todo->user_id != Auth::id()){
 			return redirect()->action('TodoController@index');
+		}else{
+			return view('todos.edit', ['todo'=>$todo]);
 		}
-		if($todo->uid != Auth::id()){
-			return redirect()->action('TodoController@index');
-		}
-		return view('todo.edit', ['todo'=>$todo]);
 	}
 	//編集
 	public function update(StoreTodo $request){
 		$todo = Todo::find($request->id);
+		if(!$todo || $todo->user_id != Auth::id()){//Todo作成者IDチェック
+			return redirect()->action('TodoController@index');
+		}
 		$todo->title = $request->title;
 		$todo->detail = $request->detail;
 		$todo->save();
-		return view('todo.update');
+		return redirect()->action('TodoController@index');
 	}
 	//削除フォーム
-	public function show(Request $request, $id){
-		$todo = Todo::find($request->id);
-		if(!$todo){
+	public function show($id){
+		$todo = Todo::find($id);
+		if(!$todo || $todo->user_id != Auth::id()){
 			return redirect()->action('TodoController@index');
+		}else{
+			return view('todos.show', ['todo' => $todo]);
 		}
-		if($todo->uid != Auth::id()){
-			return redirect()->action('TodoController@index');
-		}
-		return view('todo.show', ['todo' => $todo]);
 	}
 	//削除
-	public function delete(Request $request){
-		Todo::destroy($request->id);
-		return view('todo.delete');
-	}
-	//詳細
-	public function detail(Request $request, $id){
+	public function destroy(Request $request){
 		$todo = Todo::find($request->id);
-		if(!$todo){
+		if(!$todo || $todo->user_id != Auth::id()){
 			return redirect()->action('TodoController@index');
 		}
-
-		if($todo->uid != Auth::id()){
-			return redirect()->action('TodoController@index');
-		}
-		return view('todo.detail', ['todo' => $todo]);
+		Todo::destroy($request->id);
+		return redirect()->action('TodoController@index');
 	}
 	//タスク完了
 	public function complete(Request $request){
@@ -92,9 +100,5 @@ class TodoController extends Controller
 		$todo->doneflg = 1;
 		$todo->save();
 		return redirect()->action('TodoController@index');
-	}
-	public function top(){
-		$todo = Todo::where('uid', '=', Auth::id())->where('doneflg', '=', 0)->latest()->first();
-		return view('todo.top', ['todo' => $todo]);
 	}
 }

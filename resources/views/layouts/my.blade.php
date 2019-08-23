@@ -17,7 +17,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/todos/index') }}">
                     {{ config('app.name') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,10 +29,10 @@
                     <ul class="navbar-nav mr-auto">
                         {{-- 「記事」と「ユーザー」へのリンク --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/') }}">{{ __('TodoList') }}</a>
+                            <a class="nav-link" href="{{ url('/todos/index') }}">{{ __('TodoList') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/top') }}">{{ __('Recent Todo') }}</a>
+                            <a class="nav-link" href="{{ url('/users/show') }}">{{ __('Recent Todo') }}</a>
                         </li>
                     </ul>
 
@@ -40,7 +40,7 @@
                     <ul class="navbar-nav ml-auto">
                         {{-- 投稿ボタン --}}
                         <li class="nav-item">
-                            <a href="{{ url('/create') }}" id="new-todo" class="btn btn-success">
+                            <a href="{{ url('/todos/create') }}" id="new-todo" class="btn btn-success">
                                 {{ __('New Todo') }}
                             </a>
                         </li>

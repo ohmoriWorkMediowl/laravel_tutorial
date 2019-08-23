@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateTodosTable extends Migration
+class AlterColumnNameFromUidToUserIdTodosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class UpdateTodosTable extends Migration
     public function up()
     {
         Schema::table('todos', function (Blueprint $table) {
-            $table->text('title');
+			$table->renameColumn('uid','user_id');
         });
     }
 
@@ -26,7 +26,7 @@ class UpdateTodosTable extends Migration
     public function down()
     {
         Schema::table('todos', function (Blueprint $table) {
-			$table->dropColumn('title');
+			$table->renameColumn('user_id','uid');
         });
     }
 }
